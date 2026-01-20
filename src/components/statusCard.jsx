@@ -17,8 +17,8 @@ export default function StatusCard({ status = [] }) {
         {
           status?.length ? (
             status.every(item => item) ? (<>All systems <span className="text-green-500">Operational</span></>)
-              : status.some(item => !item) ? (<>Some systems <span className="text-red-500">Down</span></>)
-              : (<>All systems <span className="text-red-500">Down</span></>)
+              : status.every(item => !item) ? (<>All systems <span className="text-red-500">Down</span></>)
+              : (<>Some systems <span className="text-red-500">Down</span></>)
           ) : "Loading..."
         }
       </h3>
