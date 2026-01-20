@@ -47,7 +47,7 @@ export default function Monitor({ name, data }) {
                           : "green-500";
 
             return (
-              <div key={idx} className={`flex-auto rounded-full h-full mx-[1px] bg-${color} hover:bg-${color}/60 relative group`}>
+              <div key={idx} className={`flex-auto rounded-full h-full mx-[1px] bg-${color} hover:bg-${color}/60 relative group ${idx < 45 ? "hidden sm:block" : ""}`}>
                 <div className="hidden group-hover:block absolute bottom-12 left-1/2 -translate-x-1/2 w-0 h-0 border-16 border-b-0 border-x-transparent border-t-[gray] pointer-events-none blur-xs" />
                 <div className="absolute left-1/2 -translate-x-1/2 bottom-14 hidden p-2 group-hover:block bg-slate-100 dark:bg-slate-800 z-2 w-32 rounded-md shadow-[0_0_6px_gray]">
                   <div>

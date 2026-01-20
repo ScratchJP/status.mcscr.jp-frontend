@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${ubuntuSans.variable} ${ubuntuSansMono.variable} antialiased font-sans`}
       >
 
-        <div className="hidden select-none pointer-events-none bg-red-500 bg-gray-500 bg-green-500 after:bg-red-500 after:bg-gray-500 after:bg-green-500">pre-renders</div>
+        <div className="hidden select-none pointer-events-none bg-red-500 bg-gray-500 bg-green-500 after:bg-red-500 after:bg-gray-500 after:bg-green-500" aria-label="">pre-renders</div>
 
         <nav className="flex flex-row justify-between border-b border-b-[#80808080] shadow-[0_0_8px_#808080c0]">
           <div>
