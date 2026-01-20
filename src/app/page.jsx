@@ -35,9 +35,9 @@ export default function Home() {
       }
     }
     fetchStatusHistory();
-    const interval = setInterval(fetchStatusHistory, 60_000);
+    const interval = setInterval(fetchStatusHistory, 30_000);
     fetchCurrentStatus();
-    const statusInterval = setInterval(fetchCurrentStatus, 60_000);
+    const statusInterval = setInterval(fetchCurrentStatus, 30_000);
     // Clear both intervals on unmount
     return () => {
       clearInterval(interval);
