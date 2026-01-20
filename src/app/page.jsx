@@ -24,12 +24,11 @@ export default function Home() {
     async function fetchCurrentStatus() {
       try {
         const res = await fetch("https://statusapi.mcscr.jp/status");
-        if (res.ok) {
-          const data = await res.json();
-          // If error detected, update statusHistory with error info
-          setCurrentStatus([!data.error]);
+        const data = await res.json();
+        if (data.status) {
+          setCurrentStatus([true]);
         } else {
-          setCurrentStatus(false);
+          setCurrentStatus([false]);
         }
       } catch (error) {
         console.error("Failed to fetch current status:", error);

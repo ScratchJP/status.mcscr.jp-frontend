@@ -12,7 +12,7 @@ export default function StatusCard({ status = [] }) {
 
   return (
     <section className="flex flex-row items-center p-4 px-6 rounded-3xl shadow-[0_0_6px_gray] my-3">
-      <div className={`rounded-full size-12 relative after:content-[''] after:absolute after:inset-0 after:rounded-full after:size-12 after:animate-(--animate-ping-reduced) m-4 bg-${pingColor} after:bg-${pingColor}`}></div>
+      <div className={`rounded-full size-12 relative after:content-[''] after:absolute after:inset-0 after:rounded-full after:size-12 after:animate-(--animate-ping-reduced) aspect-square m-4 bg-${pingColor} after:bg-${pingColor}`}></div>
       <h3 className={`ml-1 text-4xl font-medium ${status?.length ? 'text-inherit' : 'text-gray-500'}`}>
         {
           status?.length ? (
