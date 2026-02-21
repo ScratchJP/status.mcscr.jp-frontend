@@ -84,7 +84,7 @@ export default function Home() {
         <p className="my-4 text-2xl font-medium border-l-blue-400/80 border-l-5 px-4">Status</p>
 
         <div className="rounded-3xl shadow-[0_0_6px_gray]">
-          <StatusCard status={currentStatus} />
+          <StatusCard status={currentStatus as never} />
 
           <Separator />
 
