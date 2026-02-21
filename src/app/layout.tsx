@@ -53,24 +53,26 @@ export default function RootLayout({
       >
         <TooltipProvider>
           
-          <div className="hidden select-none pointer-events-none bg-red-500 bg-gray-500 bg-green-500 after:bg-red-500 after:bg-gray-500 after:bg-green-500" aria-label="">pre-renders</div>
+          <div className="hidden select-none pointer-events-none bg-red-500 bg-gray-500 bg-green-500 after:bg-red-500 after:bg-gray-500 after:bg-green-500" aria-label="">pre-loads</div>
 
-          <nav className="flex flex-row justify-between border-b border-b-[#80808080] shadow-[0_0_8px_#808080c0]">
-            <div>
-              <Link href="/" className="flex flex-row items-center p-2 py-1 m-2 ml-4">
-                <Image
-                  src="/assets/logo/64x64.png" 
-                  width="36" 
-                  height="36"
-                  alt="ScJPMC"
-                  className="mr-2 navbar-logo"
-                />
-                <div className="text-2xl font-medium">
-                  Status
-                </div>
-              </Link>
-            </div>
-          </nav>
+          <header className="sticky top-0 z-65535">
+            <nav className="flex flex-row justify-between border-b border-b-[#80808080] shadow-[0_0_8px_#808080c0]">
+              <div>
+                <Link href="/" className="flex flex-row items-center p-2 py-1 m-2 ml-4">
+                  <Image
+                    src="/assets/logo/64x64.png" 
+                    width="36" 
+                    height="36"
+                    alt="ScJPMC"
+                    className="mr-2 navbar-logo"
+                  />
+                  <div className="text-2xl font-medium">
+                    Status
+                  </div>
+                </Link>
+              </div>
+            </nav>
+          </header>
 
           <main className="w-full max-w-5xl my-4 mx-auto">
             {children}
