@@ -3,6 +3,7 @@ import "./globals.css";
 import Link from 'next/link'
 import Image from "next/image";
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { ReactNode } from "react";
 
 const ubuntuSans = Ubuntu_Sans({
   variable: "--font-ubuntu-sans",
@@ -39,6 +40,8 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+}: {
+  children: ReactNode
 }) {
   return (
     <html lang="en">

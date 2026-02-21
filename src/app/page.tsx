@@ -89,7 +89,10 @@ export default function Home() {
           <Separator />
 
           <section className="px-5 py-4">
-            <Monitor name="ScratchJP Minecraft Server" data={statusHistory} />
+            <Monitor
+              name="ScratchJP Minecraft Server" 
+              data={statusHistory} 
+            />
           </section>
         </div>
       </div>

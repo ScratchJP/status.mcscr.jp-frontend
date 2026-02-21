@@ -1,4 +1,23 @@
-function timeFormat(seconds) {
+export interface StatusHistory {
+  data: StatusData[];
+  uptimePercentage: string;
+  unmeasuredMinutes: number;
+}
+
+export interface StatusData {
+  date: string;
+  offlineSeconds: number;
+  unmeasuredMinutes: number;
+  unmeasuredIntervals: UnmeasuredInterval[]
+}
+
+export interface UnmeasuredInterval {
+  start: string | Date;
+  end: string | Date;
+  durationMinutes: number;
+}
+
+function timeFormat(seconds: number) {
   if (seconds < 0) return "(invalid arg)";
 
   const texts = []
@@ -25,7 +44,10 @@ function timeFormat(seconds) {
   return texts.join(' ')
 };
 
-export default function Monitor({ name, data }) {
+export default function Monitor({ name , data }: {
+  name: string,
+  data: StatusHistory | null,
+}) {
   return (
     <div className="grid">
       <div className="text-lg mb-1 font-medium">
@@ -34,14 +56,14 @@ export default function Monitor({ name, data }) {
           <>
             <span className="font-normal select-none"> | </span>
             <span className="text-blue-400">
-              {data.uptimePercentage.toFixed(3)}%
+              {data.uptimePercentage}%
             </span>
           </>
         )}
       </div>
       <div className="w-full h-12 flex flex-row select-none">
         {
-          ( data?.data || Array.from({ length: 90 }).fill({ offlineSeconds: -1 })).map((info, idx) => {
+          ( data?.data || Array.from({ length: 90 }, () => ({ date: '', offlineSeconds: -1, unmeasuredMinutes: 0, unmeasuredIntervals: [] } as StatusData))).map((info, idx) => {
             const color = info.offlineSeconds < 0 ? "gray-500"
                           : info.offlineSeconds > 60 ? "red-500"
                           : "green-500";
@@ -54,14 +76,17 @@ export default function Monitor({ name, data }) {
                     <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-12 border-b-0 border-x-transparent border-t-slate-100 dark:border-t-slate-800 pointer-events-none" />
                   </div>
                   <div className="flex flex-col text-center align-start">
-                    <p className="text-sm">{ info.date }</p>
-                    <p>
-                      {
-                        info.offlineSeconds < 0 ? "No Data"
-                        : info.offlineSeconds ? `Down for ${timeFormat(info.offlineSeconds)}`
-                        : "Operational"
-                      }
-                    </p>
+                    { data ? <>
+                        <p className="text-sm">{ info.date }</p>
+                        <p>
+                          {
+                            info.offlineSeconds < 0 ? "No Data"
+                            : info.offlineSeconds ? `Down for ${timeFormat(info.offlineSeconds)}`
+                            : "Operational"
+                          }
+                        </p>
+                      </> : <p>Loading...</p>
+                    }                    
                   </div>
                 </div>
               </div>

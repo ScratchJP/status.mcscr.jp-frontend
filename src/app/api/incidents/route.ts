@@ -1,12 +1,10 @@
 import { IncidentMetadata } from '@/utils/incident';
-import * as fs from 'node:fs';
-import path from "node:path";
+import { incidentList } from '@/lib/incident-list';
+
+export const runtime = 'edge';
 
 async function fetchIncidents(getOlder: boolean = false) {
   try {
-    const incidentsPath = path.join(process.cwd(), 'content', 'incidents');
-    const incidentList = fs.readdirSync(incidentsPath, 'utf-8');
-
     const incidents = await Promise.all(incidentList.map(async incident => {
       const { default: Post, frontmatter: metadata } = await import(`@/../content/incidents/${incident}`);
 

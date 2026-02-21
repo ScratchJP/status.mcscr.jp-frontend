@@ -1,11 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function StatusCard({ status = [] }) {
+export default function StatusCard({ status = [] } : {
+  status: (boolean | null)[]
+}) {
   const [pingColor, setPingColor] = useState('gray-500')
 
   useEffect(() => {
     if (Array.isArray(status) && status.length) {
+      if (status.some(item => item === null)) {
+        setPingColor('gray-500');
+        return;
+      }
+
       setPingColor(status.every(item => item) ? 'green-500' : 'red-500');
     }
   }, [status]);
@@ -15,7 +22,7 @@ export default function StatusCard({ status = [] }) {
       <div className={`rounded-full size-8 sm:size-12 relative after:content-[''] after:absolute after:inset-0 after:rounded-full after:animate-(--animate-ping-reduced) aspect-square m-4 bg-${pingColor} after:bg-${pingColor}`}></div>
       <h3 className={`ml-1 text-2xl sm:text-4xl font-medium ${status?.length ? 'text-inherit' : 'text-gray-500'}`}>
         {
-          status?.length ? (
+          status?.length && status.every(item => item !== null) ? (
             status.every(item => item) ? (<>All systems <span className="text-green-500">Operational</span></>)
               : status.every(item => !item) ? (<>All systems <span className="text-red-500">Down</span></>)
               : (<>Some systems <span className="text-red-500">Down</span></>)
