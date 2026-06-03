@@ -1,4 +1,4 @@
-import ms from 'ms';
+import Color from 'colorjs.io';
 
 export interface StatusHistory {
   data: StatusData[];
@@ -46,6 +46,21 @@ function timeFormat(seconds: number) {
   return texts.join(' ')
 };
 
+function calculatePercentageColor(percentage: number) {
+  // https://tailwindcss.com/docs/colors
+  const colorRed = new Color("oklch(63.7% 0.237 25.331)");
+  const colorGreen = new Color("oklch(76.8% 0.233 130.85)");
+
+  const a = percentage / 100;
+
+  // linear interpolation
+  const l = (1 - a) * colorRed.oklch.l! + a * colorGreen.oklch.l!
+  const c = (1 - a) * colorRed.oklch.c! + a * colorGreen.oklch.c!
+  const h = (1 - a) * colorRed.oklch.h! + a * colorGreen.oklch.h!
+
+  return new Color('oklch', [l, c, h]).toString()
+}
+
 export default function Monitor({ name, data }: {
   name: string,
   data: StatusHistory | null,
@@ -57,7 +72,9 @@ export default function Monitor({ name, data }: {
         {data && (
           <>
             <div className="border border-slate-400/80 w-0.25 h-[80%] inline-block mx-1.5"></div>
-            <span className="text-blue-400">
+            <span style={{
+              color: calculatePercentageColor(parseFloat(data.uptimePercentage))
+            }}>
               {data.uptimePercentage}%
             </span>
           </>
@@ -71,24 +88,26 @@ export default function Monitor({ name, data }: {
                           : "green-500";
 
             return (
-              <div key={idx} className={`flex-auto rounded-full h-full mx-[1px] bg-${color} hover:bg-${color}/60 relative group ${idx < 45 ? "hidden sm:block" : ""}`}>
-                <div className="hidden group-hover:block absolute bottom-12 left-1/2 -translate-x-1/2 w-0 h-0 border-16 border-b-0 border-x-transparent border-t-[gray] pointer-events-none blur-xs" />
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-14 hidden p-2 group-hover:block bg-slate-100 dark:bg-slate-800 z-2 w-32 rounded-md shadow-[0_0_6px_gray]">
-                  <div>
-                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-12 border-b-0 border-x-transparent border-t-slate-100 dark:border-t-slate-800 pointer-events-none" />
-                  </div>
-                  <div className="flex flex-col text-center align-start">
-                    { data ? <>
-                        <p className="text-sm">{ info.date }</p>
-                        <p>
-                          {
-                            info.offlineSeconds < 0 ? "No Data"
-                            : info.offlineSeconds ? `Down for ${timeFormat(info.offlineSeconds)}`
-                            : "Operational"
-                          }
-                        </p>
-                      </> : <p>Loading...</p>
-                    }                    
+              <div key={idx} className={`flex-auto rounded-full h-full mx-0.25 bg-${color} hover:bg-${color}/60 relative group ${idx < 45 ? "hidden sm:block" : ""}`}>
+                <div>
+                  <div className="hidden group-hover:block absolute bottom-12 left-1/2 -translate-x-1/2 w-0 h-0 border-16 border-b-0 border-x-transparent border-t-[gray] pointer-events-none blur-xs" />
+                  <div className="absolute left-1/2 -translate-x-1/2 bottom-14 hidden p-2 group-hover:block bg-slate-100 dark:bg-slate-800 z-2 w-32 rounded-md shadow-[0_0_6px_gray]">
+                    <div>
+                      <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-12 border-b-0 border-x-transparent border-t-slate-100 dark:border-t-slate-800 pointer-events-none" />
+                    </div>
+                    <div className="flex flex-col text-center align-start">
+                      { data ? <>
+                          <p className="text-sm">{ info.date }</p>
+                          <p>
+                            {
+                              info.offlineSeconds < 0 ? "No Data"
+                              : info.offlineSeconds ? `Down for ${timeFormat(info.offlineSeconds)}`
+                              : "Operational"
+                            }
+                          </p>
+                        </> : <p>Loading...</p>
+                      }                    
+                    </div>
                   </div>
                 </div>
               </div>
