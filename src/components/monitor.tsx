@@ -1,3 +1,5 @@
+import ms from 'ms';
+
 export interface StatusHistory {
   data: StatusData[];
   uptimePercentage: string;
@@ -44,17 +46,17 @@ function timeFormat(seconds: number) {
   return texts.join(' ')
 };
 
-export default function Monitor({ name , data }: {
+export default function Monitor({ name, data }: {
   name: string,
   data: StatusHistory | null,
 }) {
   return (
     <div className="grid">
-      <div className="text-lg mb-1 font-medium">
+      <div className="text-lg mb-1 font-medium flex flex-row items-center">
         {name}
-        {typeof data?.uptimePercentage === "number" && (
+        {data && (
           <>
-            <span className="font-normal select-none"> | </span>
+            <div className="border border-slate-400/80 w-0.25 h-[80%] inline-block mx-1.5"></div>
             <span className="text-blue-400">
               {data.uptimePercentage}%
             </span>
