@@ -90,7 +90,8 @@ export default function Home() {
 
           <section className="px-5 py-4">
             <Monitor
-              name="ScratchJP Minecraft Server" 
+              name="ScratchJP Minecraft Server"
+              url="https://mcscr.jp"
               data={statusHistory} 
             />
           </section>

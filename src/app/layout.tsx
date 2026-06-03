@@ -58,7 +58,7 @@ export default function RootLayout({
           <header className="sticky top-0 z-65535">
             <nav className="flex flex-row justify-between border-b border-b-[#80808080] shadow-[0_0_8px_#808080c0]">
               <div>
-                <Link href="/" className="flex flex-row items-center p-2 py-1 m-2 ml-4">
+                <Link href="/" className="flex flex-row items-center p-2 py-1 m-2 ml-4 hover-bg">
                   <Image
                     src="/assets/logo/64x64.png" 
                     width="36" 

@@ -7,6 +7,7 @@
 :root {
 
   --nav-background: rgb(241, 252, 249);
+  --link-foreground: rgb(34, 130, 255);
   --link-hover-background: rgba(119, 189, 255, 0.36);
 
   --animate-ping-reduced: pingReduced 2s cubic-bezier(0, 0, 0.2, 1) infinite;
@@ -135,12 +136,20 @@ nav {
   background: var(--nav-background);
 }
 
-a {
+a.link-color {
+  color: var(--link-foreground);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+a.hover-bg {
   border-radius: .5rem;
 }
 
 @media (hover: hover) {
-  a {
+  a.hover-bg {
     transition: .2s background;
 
     &:hover {

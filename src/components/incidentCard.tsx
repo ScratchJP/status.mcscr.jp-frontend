@@ -16,11 +16,11 @@ export default function IncidentCard({ incident } : {
 }) {
 
   return (
-    <div className="px-5 py-4 not-last:border-b border-b-(--border)">
+    <div className="px-5 py-4 not-last:border-b border-b-(--border) group">
       <Link href={`/incidents/${incident.id}`}>
 
         <div className="flex gap-1 items-end">
-          <span className="text-xl font-medium mr-1">
+          <span className="text-xl font-medium mr-1 group-hover:underline">
             { incident.title }
           </span>
 
