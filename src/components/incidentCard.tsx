@@ -25,7 +25,9 @@ export default function IncidentCard({ incident } : {
           </span>
 
           <span className="text-base text-gray-500">
-            { formatDate(incident.time) }
+            { formatDate(incident.time, {
+              withSeconds: false
+            }) }
           </span>
         </div>
 
