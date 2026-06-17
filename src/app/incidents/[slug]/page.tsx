@@ -3,6 +3,26 @@ import IncidentHeader from "@/components/incidentHeader";
 
 export const runtime = 'edge';
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+ 
+  // fetch incident information
+  const { frontmatter: metadata } = await import(`@/../content/incidents/${decodeURIComponent(slug)}.mdx`)
+
+  const reporters = metadata.author.length === 1 ? metadata.author[0]
+    : metadata.author.length === 2 ? `${metadata.author[0]} and ${metadata.author[1]}`
+    : `${metadata.author[0]} and ${metadata.author.length - 1} more`;
+ 
+  return {
+    title: `${metadata.title} - ScJPMC Status`,
+    description: `Reported by ${reporters}`,
+  }
+}
+
 export default async function Page({
   params,
 }: {
