@@ -200,6 +200,14 @@ a.hover-bg {
     list-style: disc;
     margin: .8rem 0 0 1.6rem;
   }
+
+  a {
+    color: var(--link-foreground);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 hr {
