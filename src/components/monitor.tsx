@@ -103,7 +103,7 @@ export default function Monitor({ name, url, data }: {
                           <p>
                             {
                               info.offlineSeconds < 0 ? "No Data"
-                              : info.offlineSeconds ? `Down for ${timeFormat(info.offlineSeconds)}`
+                              : info.offlineSeconds ? `Down for ${timeFormat(Math.round(info.offlineSeconds))}`
                               : "Operational"
                             }
                           </p>
