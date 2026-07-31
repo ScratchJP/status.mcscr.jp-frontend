@@ -8,18 +8,24 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  const { slug } = await params
- 
-  // fetch incident information
-  const { frontmatter: metadata } = await import(`@/../content/incidents/${decodeURIComponent(slug)}.mdx`)
+  try {
+    const { slug } = await params
+  
+      // fetch incident information
+      const { frontmatter: metadata } = await import(`@/../content/incidents/${decodeURIComponent(slug)}.mdx`)
 
-  const reporters = metadata.author.length === 1 ? metadata.author[0]
-    : metadata.author.length === 2 ? `${metadata.author[0]} and ${metadata.author[1]}`
-    : `${metadata.author[0]} and ${metadata.author.length - 1} more`;
- 
-  return {
-    title: `${metadata.title} - ScJPMC Status`,
-    description: `Reported by ${reporters}`,
+    if (!metadata) return {}
+
+    const reporters = metadata.author.length === 1 ? metadata.author[0]
+      : metadata.author.length === 2 ? `${metadata.author[0]} and ${metadata.author[1]}`
+      : `${metadata.author[0]} and ${metadata.author.length - 1} more`;
+  
+    return {
+      title: `${metadata.title} - ScJPMC Status`,
+      description: `Reported by ${reporters}`,
+    }
+  } catch (err) {
+    return {};
   }
 }
 
