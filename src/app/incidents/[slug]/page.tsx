@@ -1,8 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import IncidentHeader from "@/components/incidentHeader";
 
-export const runtime = 'edge';
-
 export async function generateMetadata({
   params,
 }: {
@@ -11,8 +9,8 @@ export async function generateMetadata({
   try {
     const { slug } = await params
   
-      // fetch incident information
-      const { frontmatter: metadata } = await import(`@/../content/incidents/${decodeURIComponent(slug)}.mdx`)
+    // fetch incident information
+    const { frontmatter: metadata } = await import(`@/../content/incidents/${decodeURIComponent(slug)}.mdx`)
 
     if (!metadata) return {}
 
