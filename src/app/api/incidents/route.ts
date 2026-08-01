@@ -23,9 +23,9 @@ async function fetchIncidents(getOlder: boolean = false) {
     } as IncidentMetadata;
   }));
 
-  if (getOlder) return incidentIds;
+  if (getOlder) return incidents;
 
-  return incidentIds.filter(incident =>
+  return incidents.filter(incident =>
     incident.time.getTime() >= new Date().getTime() - 30 * 24 * 60 * 60 * 1e3
   );
 }
