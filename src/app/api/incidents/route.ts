@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 async function fetchIncidents(getOlder: boolean = false) {
+  console.log(process.env.NEXTJS_ENV)
   const incidentsPath = process.env.NEXTJS_ENV === "production"
     ? path.join("/bundle", 'content', 'incidents')
     : path.join(process.cwd(), 'content', 'incidents');
