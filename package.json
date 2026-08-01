@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "pnpm prebuild && pnpm build:next",
+    "prebuild": "node scripts/generate-incident-list.js",
+    "build:next": "next build",
     "dev": "set PORT=5279 && next dev --turbopack",
     "start": "next start",
     "lint": "next lint",
