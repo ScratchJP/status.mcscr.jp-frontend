@@ -1,18 +1,19 @@
 import { IncidentMetadata } from '@/utils/incident';
+import { incidentList } from '@/lib/incident-list';
 import fs from 'node:fs'
 import path from 'node:path'
 
 async function fetchIncidents(getOlder: boolean = false) {
-  let incidentList = [];
+  let incidentIds = [];
   if (process.env.NEXTJS_ENV === "development") {
     const incidentsPath =  path.join(process.cwd(), 'content', 'incidents');
     const files = fs.readdirSync(incidentsPath);
-    incidentList = files.filter(file => file.endsWith('.mdx'));
+    incidentIds = files.filter(file => file.endsWith('.mdx'));
   } else {
-    incidentList = import('@/lib/incident-list');
+    incidentIds = incidentList;
   }
 
-  const incidents = await Promise.all(incidentList.map(async incident => {
+  const incidents = await Promise.all(incidentIds.map(async incident => {
     const { default: Post, frontmatter: metadata } = await import(`@/../content/incidents/${incident}`);
 
     return {
@@ -22,9 +23,9 @@ async function fetchIncidents(getOlder: boolean = false) {
     } as IncidentMetadata;
   }));
 
-  if (getOlder) return incidents;
+  if (getOlder) return incidentIds;
 
-  return incidents.filter(incident =>
+  return incidentIds.filter(incident =>
     incident.time.getTime() >= new Date().getTime() - 30 * 24 * 60 * 60 * 1e3
   );
 }
