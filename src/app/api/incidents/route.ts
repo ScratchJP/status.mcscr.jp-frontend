@@ -26,7 +26,8 @@ async function fetchIncidents(getOlder: boolean = false) {
       incident.time.getTime() >= new Date().getTime() - 30 * 24 * 60 * 60 * 1e3
     );
   } catch (error) {
-    console.error("Failed to fetch incidents:", error);
+    console.error("Failed to fetch incidents");
+    console.error(error);
   }
 }
 
