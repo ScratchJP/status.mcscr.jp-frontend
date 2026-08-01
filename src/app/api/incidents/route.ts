@@ -3,32 +3,27 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 async function fetchIncidents(getOlder: boolean = false) {
-  try {
-    const incidentsPath = process.env.NEXTJS_ENV === "production"
-      ? path.join("/bundle", 'content', 'incidents')
-      : path.join(process.cwd(), 'content', 'incidents');
-    const files = fs.readdirSync(incidentsPath);
-    const incidentList = files.filter(file => file.endsWith('.mdx'));
+  const incidentsPath = process.env.NEXTJS_ENV === "production"
+    ? path.join("/bundle", 'content', 'incidents')
+    : path.join(process.cwd(), 'content', 'incidents');
+  const files = fs.readdirSync(incidentsPath);
+  const incidentList = files.filter(file => file.endsWith('.mdx'));
 
-    const incidents = await Promise.all(incidentList.map(async incident => {
-      const { default: Post, frontmatter: metadata } = await import(`@/../content/incidents/${incident}`);
+  const incidents = await Promise.all(incidentList.map(async incident => {
+    const { default: Post, frontmatter: metadata } = await import(`@/../content/incidents/${incident}`);
 
-      return {
-        ...metadata,
-        time: new Date(metadata.time),
-        id: incident.replace(/\.mdx?$/, ''),
-      } as IncidentMetadata;
-    }));
+    return {
+      ...metadata,
+      time: new Date(metadata.time),
+      id: incident.replace(/\.mdx?$/, ''),
+    } as IncidentMetadata;
+  }));
 
-    if (getOlder) return incidents;
+  if (getOlder) return incidents;
 
-    return incidents.filter(incident =>
-      incident.time.getTime() >= new Date().getTime() - 30 * 24 * 60 * 60 * 1e3
-    );
-  } catch (error) {
-    console.error("Failed to fetch incidents");
-    console.error(error);
-  }
+  return incidents.filter(incident =>
+    incident.time.getTime() >= new Date().getTime() - 30 * 24 * 60 * 60 * 1e3
+  );
 }
 
 export async function GET(request: Request) {
