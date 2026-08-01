@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "pnpm prebuild && pnpm build:next",
+    "build": "next build",
     "dev": "set PORT=5279 && next dev --turbopack",
-    "build:next": "next build",
     "start": "next start",
     "lint": "next lint",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
