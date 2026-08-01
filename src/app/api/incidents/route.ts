@@ -4,7 +4,9 @@ import path from 'node:path'
 
 async function fetchIncidents(getOlder: boolean = false) {
   try {
-    const incidentsPath = path.join(process.cwd(), 'content', 'incidents');
+    const incidentsPath = process.env.NEXTJS_ENV === "production"
+      ? path.join("/bundle", 'content', 'incidents')
+      : path.join(process.cwd(), 'content', 'incidents');
     const files = fs.readdirSync(incidentsPath);
     const incidentList = files.filter(file => file.endsWith('.mdx'));
 
